@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ja"> <!-- ページの言語を日本語に設定 -->
+
+<head>
+    <meta charset="utf-8"> <!-- 文字コードをUTF-8に設定 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- レスポンシブ対応 -->
+    <title>学習ノート</title>
+
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %} <!-- BootstrapのCSSを読み込む -->
+    {% bootstrap_javascript %} <!-- BootstrapのJSを読み込む（ナビゲーションの開閉などに必要） -->
+
+</head>
+
+<body>
+    <!-- ナビゲーションバーの開始 -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+        <!-- 
+      navbar: Bootstrapのナビゲーションバーを定義
+      navbar-expand-md: 画面幅がmd（768px）以上で横並び、それ未満で折りたたみ
+      navbar-light: 明るい背景に適したテキスト色
+      bg-light: 明るい背景色
+      mb-4: 下にマージン（margin-bottom: 1.5rem）
+      border: 枠線を表示
+    -->
+        <div class="container-fluid"> <!-- 幅いっぱいに広がるコンテナ -->
+
+            <a class="navbar-brand" href="{% url 'learning_logs:index' %}">
+                学習ノート</a>
+            <!-- 
+        navbar-brand: ナビゲーションバー内のブランド名やロゴに使用
+      -->
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="ナビゲーションの切り替え">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- 
+        navbar-toggler: 折りたたみメニューのトグルボタン
+        navbar-toggler-icon: ハンバーガーアイコンを表示
+      -->
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <!-- 
+          collapse: 折りたたみ可能な要素
+          navbar-collapse: ナビゲーションバーの折りたたみ対象
+        -->
+
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <!-- 
+            navbar-nav: ナビゲーションリンクのリスト
+            me-auto: 右側に自動マージン（左寄せ）
+            mb-2: 下マージン（小画面用）
+            mb-md-0: md以上の画面では下マージンなし
+          -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'learning_logs:topics' %}">
+                            トピック一覧</a>
+                    </li>
+                    <!-- 
+              nav-item: ナビゲーション項目
+              nav-link: ナビゲーションリンクのスタイル
+            -->
+                </ul> <!-- navbar左側のリンクリストの終了 -->
+
+                <!-- アカウント関連のリンク -->
+                <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                    <!-- 
+            ms-auto: 左側に自動マージン（右寄せ）
+          -->
+
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="navbar-text me-2">こんにちは {{ user.username }}さん</span>
+                        <!-- 
+                navbar-text: テキスト表示用（リンクではない）
+                me-2: 右マージン（margin-end: 0.5rem）
+              -->
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:register' %}">
+                            ユーザー登録</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:login' %}">
+                            ログイン</a>
+                    </li>
+                    {% endif %}
+                </ul> <!-- アカウント関連のリンクの終了 -->
+
+                {% if user.is_authenticated %}
+                <form action="{% url 'accounts:logout' %}" method='post'>
+                    {% csrf_token %}
+                    <button name='submit' class='btn btn-outline-secondary btn-sm'>
+                        ログアウト</button>
+                    <!-- 
+              btn: Bootstrapのボタンスタイル
+              btn-outline-secondary: 枠線だけのセカンダリ色ボタン
+              btn-sm: 小さめサイズのボタン
+            -->
+                </form>
+                {% endif %}
+
+            </div> <!-- navbarの折りたたみ可能なパーツの終了 -->
+        </div> <!-- navbarコンテナの終了 -->
+    </nav> <!-- navbar全体の終了 -->
+
+    <main class="container">
+        <!-- 
+      container: 中央寄せで左右に余白を持つレイアウト
+    -->
+        <div class="pb-2 mb-2 border-bottom">
+            <!--●ページタイトルを以下に差し込む-->
+            {% block page_header %}{% endblock page_header %}
+            <!-- 
+        pb-2: 下パディング（padding-bottom: 0.5rem）
+        mb-2: 下マージン（margin-bottom: 0.5rem）
+        border-bottom: 下線を表示
+      -->
+        </div>
+
+        <div>
+            {% block content %}{% endblock content %}
+        </div>
+    </main>
+
+</body>
+
+</html>
