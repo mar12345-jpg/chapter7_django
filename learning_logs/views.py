@@ -11,6 +11,8 @@ def index(request):
 
 def topics(request):
     """すべてのトピックを表示する"""
+    # トピックテーブルのレコードを日付昇順並べ替えで習得
     topics = Topic.objects.order_by('date_added')
+    # 検索結果に'topics'という名前を付けて辞書に入れてhtmlに渡す
     context = {'topics':topics}
     return render(request,'learning_logs/topics.html',context)
