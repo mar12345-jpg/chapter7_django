@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 
-from learning_logs.forms import TopicForm
+from learning_logs.forms import TopicForm,EntryForm
 from learning_logs.models import Topic
 
 # Create your views here.
@@ -42,3 +42,23 @@ def new_topic(request):
     # 空または無効のフォームを表示する
     context = {'form': form}
     return render(request, 'learning_logs/new_topic.html', context)
+
+def new_entry(request, topic_id):
+    """特定のトピックに新規記事を追加する"""
+    topic = Topic.objects.get(id=topic_id)
+    
+    if request.method != 'POST':
+        # データは送信されていないので空のフォームを生成する
+        form = EntryForm()
+    else:
+        # POSTでデータが送信されたのでこれを処理する
+        form = EntryForm(data=request.POST)
+        if form.is_valid():
+            new_entry = form.save(commit=False)
+            new_entry.topic = topic
+            new_entry.save()
+            return redirect('learning_logs:topic', topic_id=topic_id)
+
+    # 空または無効のフォームを表示する
+    context = {'topic': topic, 'form': form}
+    return render(request, 'learning_logs/new_entry.html', context)
