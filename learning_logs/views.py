@@ -36,6 +36,7 @@ def new_topic(request):
         form = TopicForm(data=request.POST)
         if form.is_valid():
             form.save()
+            # /topics/
             return redirect('learning_logs:topics')
 
     # 空または無効のフォームを表示する
