@@ -9,9 +9,12 @@ from learning_logs import views
 app_name = 'learning_logs'
 urlpatterns = [
     # ホームページ
+    path('', views.index, name='index'),
     # パス文字れる => 関数名,パスに別名を付ける
     # learning_logs:index = ''
     # {% url "learning_logs:index" %}
-    path('',views.index,name='index'),
-    path('topics/',views.topics,name='topics'),
+    # すべてのトピックを表示するページ
+    path('topics/', views.topics, name='topics'),
+    # 個別トピックの詳細ページ
+    path('topics/<int:topic_id>/', views.topic, name='topic'),
 ]

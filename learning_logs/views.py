@@ -9,6 +9,7 @@ def index(request):
     # tenplates/アプリ名フォルダ/を探す
     return render(request,'learning_logs/index.html')
 
+
 def topics(request):
     """すべてのトピックを表示する"""
     # トピックテーブルのレコードを日付昇順並べ替えで習得
@@ -16,3 +17,10 @@ def topics(request):
     # 検索結果に'topics'という名前を付けて辞書に入れてhtmlに渡す
     context = {'topics':topics}
     return render(request,'learning_logs/topics.html',context)
+
+def topic(request, topic_id):
+    """1つのトピックとそれについてのすべての記事を表示"""
+    topic = Topic.objects.get(id=topic_id)
+    entries = topic.entry_set.order_by('-date_added')
+    context = {'topic': topic, 'entries': entries}
+    return render(request, 'learning_logs/topic.html', context)
