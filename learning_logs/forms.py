@@ -11,6 +11,6 @@ class TopicForm(forms.ModelForm):
 class EntryForm(forms.ModelForm):
     class Meta:
         model = Entry
-        fields = ['text']
+        fields = ['text'] # もしここをfields = ['text','topic']にしたら、new_entry()ビュー関数はどう変わる？
         labels = {'text': ''}
         widgets = {'text': forms.Textarea(attrs={'cols': 80})}

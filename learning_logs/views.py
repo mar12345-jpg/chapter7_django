@@ -54,9 +54,9 @@ def new_entry(request, topic_id):
         # POSTでデータが送信されたのでこれを処理する
         form = EntryForm(data=request.POST)
         if form.is_valid():
-            new_entry = form.save(commit=False)
+            new_entry = form.save(commit=False) # メモリ上には登録予定のデータは置いてあるけど、ommit=FalseでDBにはまだ入れないでおこう
             new_entry.topic = topic
-            new_entry.save()
+            new_entry.save() # モデルのセーブを呼び出してるよ
             return redirect('learning_logs:topic', topic_id=topic_id)
 
     # 空または無効のフォームを表示する
