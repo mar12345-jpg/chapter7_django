@@ -55,6 +55,7 @@ def new_entry(request, topic_id):
         form = EntryForm(data=request.POST)
         if form.is_valid():
             new_entry = form.save(commit=False) # メモリ上には登録予定のデータは置いてあるけど、ommit=FalseでDBにはまだ入れないでおこう
+                                                # フォームの内容を使って モデルインスタンスを作る けれど、そのインスタンスを まだ save() しない
             new_entry.topic = topic
             new_entry.save() # モデルのセーブを呼び出してるよ
             return redirect('learning_logs:topic', topic_id=topic_id)
