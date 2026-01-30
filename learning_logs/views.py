@@ -66,18 +66,21 @@ def new_entry(request, topic_id):
 
 def edit_entry(request, entry_id):
     """既存の記事を編集する"""
-    entry = Entry.objects.get(id=entry_id)
-    topic = entry.topic
+    entry = Entry.objects.get(id=entry_id) # データベースから指定されたIDのEntryを取得する
+    topic = entry.topic # 編集対象の記事が属しているTopicを取得。編集後にリダイレクトするために必要。
 
-    if request.method != 'POST':
+    if request.method != 'POST': # リクエストがPOST以外（＝初回アクセス、GET）の場合の処理
         # 初回リクエスト時は現在の記事の内容がフォームに埋め込まれている
-        form = EntryForm(instance=entry)
+        form = EntryForm(instance=entry) # instance=entryを渡すことで「編集フォーム」になる
     else:
         # POSTでデータが送信されたのでこれを処理する
-        form = EntryForm(instance=entry, data=request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('learning_logs:topic', topic_id=topic.id)
+        form = EntryForm(instance=entry, data=request.POST) # instance=entryを渡すことで「既存のentryを更新する」動作になる
+        if form.is_valid(): # フォームの入力内容がバリデーションを通ったかチェック
+            form.save() # フォームの内容をデータベースに保存（既存entryの更新）
+            return redirect('learning_logs:topic', topic_id=topic.id) # 編集が終わったら、その記事が属するTopicのページへリダイレクト
+                                                                      # ユーザーに「編集完了後の画面」を見せるため
+    context = {'entry': entry, 'topic': topic, 'form': form} # entry（編集対象）、topic（親）、form（フォーム）
 
-    context = {'entry': entry, 'topic': topic, 'form': form}
     return render(request, 'learning_logs/edit_entry.html', context)
+    # テンプレートを描画してユーザーに返す・GET の場合は「編集フォーム表示」・POST でエラーがあった場合は「エラー付きフォーム再表示」
+
