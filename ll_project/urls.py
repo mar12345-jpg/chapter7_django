@@ -20,6 +20,7 @@ from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
+    # http://127.0.0.1:8000/accounts/
     # ドメイン直下のアドレス => 以降のアドレスは下記ファイル参照
     path('', include('learning_logs.urls')),
 ]
