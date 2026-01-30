@@ -2,11 +2,30 @@
 
 {% block content %}
 
-  <form action="{% url 'accounts:register' %}" method='post'>
+
+  <form method="post">
+  {% csrf_token %}
+  
+  {% for field in form %}
+    <div class="field-wrapper">
+      <label>{{ field.label }}</label>
+      {{ field }} {# field.help_text を書かないことで、説明文を表示させない #}
+      
+      {% if field.errors %}
+        <div class="errors">{{ field.errors }}</div>
+      {% endif %}
+    </div>
+  {% endfor %}
+  
+  <button type="submit">登録</button>
+</form>
+
+{% endblock content %}
+
+
+  <!-- <form action="{% url 'accounts:register' %}" method='post'>
     {% csrf_token %}
     {{ form.as_div }}
 
     <button name="submit">登録する</button>
-  </form>
-
-{% endblock content %}
+  </form> -->
