@@ -19,6 +19,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('accounts.urls')),
     # ドメイン直下のアドレス => 以降のアドレスは下記ファイル参照
     path('', include('learning_logs.urls')),
 ]
