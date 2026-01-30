@@ -21,4 +21,6 @@ urlpatterns = [
     path('new_topic/', views.new_topic, name='new_topic'),
     # 新規記事の追加ページ 引数パスにトピックIDをセット
     path('new_entry/<int:topic_id>/', views.new_entry, name='new_entry'),
+    # 記事の編集ページ
+    path('edit_entry/<int:topic_id>/', views.edit_entry, name='edit_entry'),
 ]
