@@ -5,9 +5,18 @@
     {% if user.is_authenticated %}
         こんにちは {{ user.username }}さん
     {% else %}
-        {# <a href="{% url 'accounts:register' %}">ユーザー登録</a> - #}
+         <a href="{% url 'accounts:register' %}">ユーザー登録</a> -
         <a href="{% url 'accounts:login' %}">ログイン</a>
     {% endif %}
+
+    {% if user.is_authenticated %}
+    <hr />
+    <form action="{% url 'accounts:logout' %}" method='post'>
+        {% csrf_token %}
+        <button name='submit'>ログアウト</button>
+    </form>
+    {% endif %}
+
 </p>
 
 {% block content %}
