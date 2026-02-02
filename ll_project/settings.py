@@ -121,6 +121,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # 自分の設定
+# ログイン後の、画面遷移先名
 LOGIN_REDIRECT_URL = 'learning_logs:index'
 LOGOUT_REDIRECT_URL = 'learning_logs:index'
+# ログインしていない場合の、画面遷移先名
 LOGIN_URL = 'accounts:login'
