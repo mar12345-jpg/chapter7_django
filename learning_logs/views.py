@@ -45,8 +45,11 @@ def new_topic(request):
         # POSTでデータが送信されたのでこれを処理する
         form = TopicForm(data=request.POST)
         if form.is_valid():
-            form.save()
-            # /topics/
+            new_topic = form.save(commit=False) # p256
+            new_topic.owner = request.user
+            new_topic.save()
+            # form.save()
+            # # /topics/
             return redirect('learning_logs:topics')
 
     # 空または無効のフォームを表示する
