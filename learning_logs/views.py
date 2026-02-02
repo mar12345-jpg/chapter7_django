@@ -3,6 +3,8 @@ from django.shortcuts import redirect, render
 from learning_logs.forms import TopicForm,EntryForm
 from learning_logs.models import Topic, Entry
 
+from django.contrib.auth.decorators import login_required # p248
+
 # Create your views here.
 
 def index(request):
@@ -11,6 +13,7 @@ def index(request):
     return render(request,'learning_logs/index.html')
 
 
+@login_required # p248
 def topics(request):
     """すべてのトピックを表示する"""
     # トピックテーブルのレコードを日付昇順並べ替えで習得

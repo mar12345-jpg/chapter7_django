@@ -123,3 +123,4 @@ STATIC_URL = 'static/'
 # 自分の設定
 LOGIN_REDIRECT_URL = 'learning_logs:index'
 LOGOUT_REDIRECT_URL = 'learning_logs:index'
+LOGIN_URL = 'accounts:login'
