@@ -1,3 +1,7 @@
+# このプロジェクトを動かすために必要なパッケージ一覧
+# pip install -r requirements.txt
+# cmdに上記入力すると同じバージョンのライブラリを一括インストールできる
+
 asgiref==3.11.0
 Django==6.0.1
 sqlparse==0.5.5
