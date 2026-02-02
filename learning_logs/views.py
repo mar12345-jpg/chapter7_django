@@ -4,6 +4,7 @@ from learning_logs.forms import TopicForm,EntryForm
 from learning_logs.models import Topic, Entry
 
 from django.contrib.auth.decorators import login_required # p248
+from django.http import Http404 # p254
 
 # Create your views here.
 
@@ -26,6 +27,10 @@ def topics(request):
 def topic(request, topic_id):
     """1つのトピックとそれについてのすべての記事を表示"""
     topic = Topic.objects.get(id=topic_id)
+    # トピックが現在のユーザーが所持するものであることを確認する
+    if topic.owner != request.user:
+        raise Http404
+
     entries = topic.entry_set.order_by('-date_added')
     context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
