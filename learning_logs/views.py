@@ -28,8 +28,7 @@ def topic(request, topic_id):
     """1つのトピックとそれについてのすべての記事を表示"""
     topic = Topic.objects.get(id=topic_id)
     # トピックが現在のユーザーが所持するものであることを確認する 所有者の確認
-    if topic.owner != request.user:
-        raise Http404
+    check_topic_owner(topic, request.user)
 
     entries = topic.entry_set.order_by('-date_added')
     context = {'topic': topic, 'entries': entries}
@@ -61,8 +60,7 @@ def new_entry(request, topic_id):
     """特定のトピックに新規記事を追加する"""
     topic = Topic.objects.get(id=topic_id)
     # トピックが現在のユーザーが所持するものであることを確認する 所有者の確認
-    if topic.owner != request.user:
-        raise Http404
+    check_topic_owner(topic, request.user)
     
     if request.method != 'POST':
         # データは送信されていないので空のフォームを生成する
@@ -86,8 +84,7 @@ def edit_entry(request, entry_id):
     """既存の記事を編集する"""
     entry = Entry.objects.get(id=entry_id) # データベースから指定されたIDのEntryを取得する
     topic = entry.topic # 編集対象の記事が属しているTopicを取得。編集後にリダイレクトするために必要。
-    if topic.owner != request.user: # p255
-        raise Http404
+    check_topic_owner(topic, request.user)
 
     if request.method != 'POST': # リクエストがPOST以外（＝初回アクセス、GET）の場合の処理
         # 初回リクエスト時は現在の記事の内容がフォームに埋め込まれている
@@ -104,3 +101,10 @@ def edit_entry(request, entry_id):
     return render(request, 'learning_logs/edit_entry.html', context)
     # テンプレートを描画してユーザーに返す・GET の場合は「編集フォーム表示」・POST でエラーがあった場合は「エラー付きフォーム再表示」
 
+def check_topic_owner(topic, user):
+    """現在ログイン中のユーザーがリクエストされたトピックのオーナーか確認する。
+
+    ユーザーがオーナー出ない場合404エラーを発生させる。
+    """
+    if topic.owner != user:
+        raise Http404
