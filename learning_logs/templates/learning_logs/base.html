@@ -1,3 +1,99 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>学習ノート</title>
+  {# Django Bootstrap5 のテンプレートタグを読み込む（これを使うと bootstrap_* タグが使える） #}
+  {% load django_bootstrap5 %}
+
+  {# Bootstrap の CSS を読み込む（CDN を自動挿入してくれる） #}
+  {% bootstrap_css %}
+
+  {# Bootstrap の JavaScript を読み込む（モーダル・ドロップダウンなどに必要） #}
+  {% bootstrap_javascript %}
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'learning_logs:index' %}">
+          学習ノート</a>
+
+        <!-- navbar-toggler: 画面幅が狭いときに表示される三本線のハンバーガーメニュー開閉ボタン -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarCollapse" aria-controls="navbarCollapse"
+        aria-expanded="false" aria-label="ナビゲーションの切り替え">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- collapse navbar-collapse: 折りたたみ可能なナビゲーション領域 -->
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+
+                <!-- navbar-nav: ナビゲーションのリスト
+             me-auto: 右側に余白を作り、左寄せにする
+             mb-2 mb-md-0: 下余白（小画面のみ） -->
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'learning_logs:topics' %}">
+              トピック一覧</a></li>
+        </ul> <!-- navbar左側のリンクリストの終了 -->
+
+        <!-- アカウント関連のリンク -->
+        <!-- navbar-nav: ナビゲーションのリスト
+             ms-auto: 左側に余白を作り、右寄せにする -->
+        <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+            <!-- navbar-text: テキスト表示用のクラス
+                   me-2: 右側に余白 -->
+              <span class="navbar-text me-2">こんにちは {{ user.username }}さん
+                </span></li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'accounts:register' %}">
+                  ユーザー登録</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'accounts:login' %}">
+                  ログイン</a></li>
+          {% endif %}
+
+        </ul> <!-- アカウント関連のリンクの終了 -->
+
+        {% if user.is_authenticated %}
+          <!-- btn: ボタン
+               btn-outline-secondary: 枠線のみのセカンダリ色ボタン
+               btn-sm: 小さいボタン -->
+          <form action="{% url 'accounts:logout' %}" method='post'>
+            {% csrf_token %}
+            <button name='submit' class='btn btn-outline-secondary btn-sm'>
+                ログアウト</button>
+          </form>
+        {% endif %}
+
+      </div> <!-- navbarの折りたたみ可能なパーツの終了 -->
+
+    </div> <!-- navbarコンテナの終了 -->
+  </nav> <!-- navbar全体の終了 -->
+
+  <!-- container: 中央寄せ＋左右に余白のあるレイアウト -->
+  <main class="container">
+    <!-- pb-2: 下 padding
+         mb-2: 下 margin
+         border-bottom: 下線 -->
+    <div class="pb-2 mb-2 border-bottom">
+      {% block page_header %}{% endblock page_header %}
+    </div>
+
+    <div>
+      {% block content %}{% endblock content %}
+    </div>
+  </main>
+
+</body>
+</html>
+<!-- 
 <p>
     {# app_name:name #}
     <a href="{% url 'learning_logs:index' %}">学習ノート</a>
@@ -18,7 +114,4 @@
     {% endif %}
 
 </p>
-
-{% block content %}
-<!-- 継承先のページのcontentが挿入される -->
-{% endblock content %}
+ -->

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Bootstrap レイアウト</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+      <!-- navbar: ナビゲーションバー全体 -->
+  <!-- navbar-light: 明るい背景に合う文字色 -->
+  <!-- bg-light: 薄い背景色 -->
+  <nav class="navbar navbar-light bg-light">
+
+    <!-- container-fluid: 横幅いっぱいに広がるレイアウト -->
+    <div class="container-fluid">
+
+      <!-- navbar-brand: ロゴやサイト名を表示する部分 -->
+      <a class="navbar-brand" href="#">サイト名</a>
+
+      <!-- d-flex: 横並びにするフレックスレイアウト -->
+      <div class="d-flex">
+
+        <!-- nav-link: ナビゲーション用リンク -->
+        <!-- me-3: 右に余白 -->
+        <a class="nav-link me-3" href="#">ホーム</a>
+
+        <a class="nav-link" href="#">ログイン</a>
+
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- container: 中央寄せ＋左右に余白を持つレイアウトの基本枠 -->
+  <div class="container mt-4">
+
+          <!-- mt-5: 上に大きめの外側余白（margin-top） -->
+    <!-- <div class="mt-5"> -->
+
+    <!-- p-4: 内側に広めの余白（padding） -->
+    <!-- bg-info: 青系の背景色 -->
+    <!-- text-white: 文字色を白に -->
+    <div class="p-4 bg-info text-white">
+
+      <!-- mb-0: 下の余白をゼロにする -->
+      <p class="mb-0">余白を使いこなすとデザインが綺麗になります。</p>
+
+    </div>
+
+    <!-- row: 横並びの行を作る（col を並べるための箱） -->
+    <div class="row">
+
+      <!-- col-md-8: 画面幅 md(768px)以上で 8/12 の幅を取る -->
+      <!-- bg-light: 薄い背景色 -->
+      <!-- p-3: 内側に余白（padding） -->
+      <div class="col-md-8 bg-light p-3">
+        メインコンテンツ
+      </div>
+
+        <!-- display-1: 特大見出し（h1 より大きい） -->
+    <h1 class="display-1">大見出し</h1>
+
+    <!-- lead: 少し大きく読みやすい説明文 -->
+    <p class="lead">この記事の要約をここに書きます。</p>
+
+    <!-- text-muted: 薄い文字色で補足情報を表現 -->
+    <p class="text-muted">投稿日：2026年2月1日</p>
+
+      <!-- col-md-4: 画面幅 md 以上で 4/12 の幅 -->
+      <!-- bg-secondary: グレー背景 -->
+      <!-- text-white: 文字色を白に -->
+      <!-- p-3: 内側余白 -->
+      <div class="col-md-4 bg-secondary text-white p-3">
+        サイドバー
+      </div>
+
+        <!-- list-group: 整ったリストデザイン -->
+    <ul class="list-group m-4">
+
+        <!-- list-group-item: リストの1項目 -->
+        <li class="list-group-item">項目 1</li>
+
+        <!-- active: 選択中の項目を強調（背景色＋白文字） -->
+        <li class="list-group-item active">項目 2（選択中）</li>
+
+        <li class="list-group-item">項目 3</li>
+
+    </ul>
+
+  <!-- container: 読みやすい幅に整えるレイアウト枠 -->
+  <div class="container mt-4">
+
+    <!-- form: 入力内容を送信するためのフォーム全体 -->
+    <!-- action="#"：送信先（今回はデモなので # にしている） -->
+    <!-- method="post"：データをURLに含めず安全に送信 -->
+    <form action="#" method="post">
+
+      <!-- mb-3: 下に余白をつけてフォーム同士が詰まらないようにする -->
+      <div class="mb-3">
+
+        <!-- form-label: ラベルの見た目を整える -->
+        <label class="form-label">お名前</label>
+
+        <!-- form-control: 入力欄を幅100%＋整った見た目にする -->
+        <!-- placeholder: 入力例を表示 -->
+        <input type="text" class="form-control" placeholder="例：山田 太郎">
+
+      </div>
+
+            <!-- mb-3: 下に余白 -->
+      <div class="mb-3">
+
+        <label class="form-label">お問い合わせ内容</label>
+
+        <!-- textarea.form-control: 複数行の入力欄も form-control で整う -->
+        <textarea class="form-control" rows="4" placeholder="ご用件をご記入ください"></textarea>
+
+      </div>
+
+      <!-- btn: ボタンの基本スタイル -->
+      <!-- btn-primary: 青色の主要アクションボタン -->
+      <button type="submit" class="btn btn-primary">送信する</button>
+
+    </form>
+
+    </div>
+
+        <body class="m-4">
+
+    <!-- btn: ボタンの基本スタイル -->
+    <!-- btn-primary: 青色の主要アクションボタン -->
+    <button class="btn btn-outline-primary">保存する</button>
+
+    <!-- btn-outline-danger: 赤色の枠線ボタン（注意喚起） -->
+    <button class="btn btn-outline-danger">削除</button>
+
+    <!-- btn-secondary: 補助的なグレーのボタン -->
+    <!-- btn-sm: 小さめサイズ -->
+    <button class="btn btn-secondary btn-sm">閉じる</button>
+
+    </div>
+  </div>
+
+</body>
+</html>
