@@ -60,6 +60,9 @@ def new_topic(request):
 def new_entry(request, topic_id):
     """特定のトピックに新規記事を追加する"""
     topic = Topic.objects.get(id=topic_id)
+    # トピックが現在のユーザーが所持するものであることを確認する 所有者の確認
+    if topic.owner != request.user:
+        raise Http404
     
     if request.method != 'POST':
         # データは送信されていないので空のフォームを生成する
